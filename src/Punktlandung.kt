@@ -44,15 +44,33 @@ object Punktlandung {
         result.toList()
     }
 
+    private fun checkDiagonals(givenRows: Array<Pair<Int, Int>>, candidate: Pair<Int, Int>, rowIndex0: Int, rowIndex1: Int): Boolean {
+        val row1 = givenRows[rowIndex0]
+        val row2 = givenRows[rowIndex1]
+        val index = givenRows.size
 
-    // 1. only 2 in column: 3508230
-    // 2. check diagonals:
+        val forbidden1 = (row2.first - row1.first) * (index - 1) + row2.first
+        val forbidden2 = (row2.second - row1.first) * (index - 1) + row2.second
+        val forbidden3 = (row2.first - row1.second) * (index - 1) + row2.first
+        val forbidden4 = (row2.second - row1.second) * (index - 1) + row2.second
+
+        return candidate.first != forbidden1 && candidate.first != forbidden2 && candidate.first != forbidden3 && candidate.first != forbidden4 &&
+            candidate.second != forbidden1 && candidate.second != forbidden2 && candidate.second != forbidden3 && candidate.second != forbidden4
+    }
+
+    // 1. only 2 in column        : 3508230
+    // 2. diagonals of rows 1 % 2 : 1598002
+    // 3. diagonals of all rows   :
     fun legal(vararg givenRows: Pair<Int, Int>): List<Pair<Int, Int>> {
         return enumerate2of8.filter {
             val atPos0: Int = givenRows.count { row -> row.first == it.first || row.second == it.first }
             val atPos1: Int = givenRows.count { row -> row.second == it.second || row.first == it.second }
 
-            atPos0 < 2 && atPos1 < 2
+            if (atPos0 < 2 && atPos1 < 2) {
+                checkDiagonals(givenRows as Array<Pair<Int, Int>>, it, 0, 1)
+            } else {
+                false
+            }
         }
     }
 }
