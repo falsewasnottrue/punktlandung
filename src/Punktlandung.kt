@@ -10,6 +10,16 @@ object Punktlandung {
     (1, 7)
     (3, 5)
     (0, 4)
+
+     2:
+    (0, 4)
+    (3, 5)
+    (1, 7)
+    (5, 6)
+    (1, 7)
+    (2, 6)
+    (2, 4)
+    (0, 3)
      */
 
     @JvmStatic
@@ -22,14 +32,14 @@ object Punktlandung {
         for (row1 in enumerate2of8) {
             for (row2 in enumerate2of8) {
                 for (row3 in legal(row1, row2)) {
-                    if (row3.first == 2 || row3.second == 2) {
+                    if (row3.first == 7 || row3.second == 7) {
                         for (row4 in legal(row1, row2, row3)) {
-                            if (row4.first == 1 || row4.second == 1) {
-                                for (row5 in legal(row1, row2, row3, row4)) {
+                            for (row5 in legal(row1, row2, row3, row4)) {
+                                if (row5.first == 1 || row5.second == 1) {
                                     for (row6 in legal(row1, row2, row3, row4, row5)) {
-                                        for (row7 in legal(row1, row2, row3, row4, row5, row6)) {
-                                            for (row8 in legal(row1, row2, row3, row4, row5, row6, row7)) {
-                                                if (row8.first == 4 || row8.second == 4 ) {
+                                        if (row6.first == 2 || row6.second == 2) {
+                                            for (row7 in legal(row1, row2, row3, row4, row5, row6)) {
+                                                for (row8 in legal(row1, row2, row3, row4, row5, row6, row7)) {
                                                     count++
 
                                                     println(row1)
